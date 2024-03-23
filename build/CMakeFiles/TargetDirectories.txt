@@ -1,0 +1,3 @@
+/Users/Chandu/Desktop/CppND-Memory-Management-Chatbot/build/CMakeFiles/membot.dir
+/Users/Chandu/Desktop/CppND-Memory-Management-Chatbot/build/CMakeFiles/edit_cache.dir
+/Users/Chandu/Desktop/CppND-Memory-Management-Chatbot/build/CMakeFiles/rebuild_cache.dir
