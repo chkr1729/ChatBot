@@ -9,7 +9,7 @@
 ChatBot::ChatBot()
 {
     // invalidate data handles
-    _image = nullptr;
+    _image = NULL;
     _chatLogic = nullptr;
     _rootNode = nullptr;
 }
@@ -82,6 +82,12 @@ ChatBot::ChatBot(ChatBot&& other) noexcept
 ChatBot& ChatBot::operator=(ChatBot&& other) noexcept
 {
     std::cout << "ChatBot Move Assignment Constructor" << std::endl;
+
+    if(_image != NULL) 
+    {
+        delete _image;
+        _image = NULL;
+    }
 
     _image = other._image;
     _currentNode = other._currentNode;
