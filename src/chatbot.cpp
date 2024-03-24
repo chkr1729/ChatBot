@@ -9,7 +9,7 @@
 ChatBot::ChatBot()
 {
     // invalidate data handles
-    _image = NULL;
+    _image = std::make_unique<wxBitmap>();
     _chatLogic = nullptr;
     _rootNode = nullptr;
 }
@@ -24,26 +24,19 @@ ChatBot::ChatBot(std::string filename)
     _rootNode = nullptr;
 
     // load image into heap memory
-    _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
+    _image = std::make_unique<wxBitmap>(filename, wxBITMAP_TYPE_PNG);
 }
 
 ChatBot::~ChatBot()
 {
     std::cout << "ChatBot Destructor" << std::endl;
-
-    // deallocate heap memory
-    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
-    {
-        delete _image;
-        _image = NULL;
-    }
 }
 
 ChatBot::ChatBot(const ChatBot& other) 
 {
     std::cout << "ChatBot Copy Constructor" << std::endl;
 
-    _image = new wxBitmap(*other._image);
+    _image = std::make_unique<wxBitmap>(*other._image);
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
     _chatLogic = other._chatLogic;
@@ -54,7 +47,7 @@ ChatBot& ChatBot::operator=(const ChatBot& other)
     std::cout << "ChatBot Copy Assignment Constructor" << std::endl;
 
     if (this != &other) {
-        _image = new wxBitmap(*other._image);
+        _image = std::make_unique<wxBitmap>(*other._image);
         _currentNode = other._currentNode;
         _rootNode = other._rootNode;
         _chatLogic = other._chatLogic;
@@ -68,12 +61,11 @@ ChatBot::ChatBot(ChatBot&& other) noexcept
 {
     std::cout << "ChatBot Move Constructor" << std::endl;
 
-    _image = other._image;
+    _image = std::move(other._image);
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
     _chatLogic = other._chatLogic;
 
-    other._image = NULL;
     other._currentNode = nullptr;
     other._rootNode = nullptr;
     other._chatLogic = nullptr;
@@ -82,19 +74,12 @@ ChatBot::ChatBot(ChatBot&& other) noexcept
 ChatBot& ChatBot::operator=(ChatBot&& other) noexcept
 {
     std::cout << "ChatBot Move Assignment Constructor" << std::endl;
-
-    if(_image != NULL) 
-    {
-        delete _image;
-        _image = NULL;
-    }
-
-    _image = other._image;
+    
+    _image = std::move(other._image);
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
     _chatLogic = other._chatLogic;
 
-    other._image = NULL;
     other._currentNode = nullptr;
     other._rootNode = nullptr;
     other._chatLogic = nullptr;
